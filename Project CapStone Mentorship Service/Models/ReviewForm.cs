@@ -14,8 +14,6 @@ namespace Project_CapStone_Mentorship_Service.Models
         public int rating { get; set; }
         public string Description { get; set; }
 
-        [ForeignKey("Student")]
-
-        public int StudentId { get; set; }
+        
     }
 }

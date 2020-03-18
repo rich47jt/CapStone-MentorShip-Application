@@ -11,10 +11,12 @@ namespace Project_CapStone_Mentorship_Service.Models
     public class Student
     {
         [Key]
-        public int Id { get; set; }
+        public int StudentId { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Email { get; set; }
+        public string ParentEmail { get; set; }
+        public string InstructorEmail { get; set; }
         public string City { get; set; }
 
         [ForeignKey("IdentityUser")]

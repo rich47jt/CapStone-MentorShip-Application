@@ -18,5 +18,6 @@ namespace Project_CapStone_Mentorship_Service.Models
         [ForeignKey("Mentor")]
 
         public int MentorId { get; set; }
+
     }
 }

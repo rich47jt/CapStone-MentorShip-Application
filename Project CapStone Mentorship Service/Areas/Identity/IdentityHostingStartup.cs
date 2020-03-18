@@ -13,15 +13,7 @@ namespace Project_CapStone_Mentorship_Service.Areas.Identity
    
     public class IdentityHostingStartup : IHostingStartup
     {
-    //    app.UseRouting();
-    //    app.UseStaticFiles();
-    //    app.UseAuthentication();
-    //    app.UseEndpoints(endpoints =>
-    //{
-    //    endpoints.MapControllers();
-    //    endpoints.MapRazorPages();
-    //});
-    //    services.AddMvc();
+ 
 
         public void Configure(IWebHostBuilder builder)
         {

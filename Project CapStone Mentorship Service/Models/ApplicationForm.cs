@@ -17,15 +17,21 @@ namespace Project_CapStone_Mentorship_Service.Models
         public string ZipCode { get; set; }
         public string DesiredPosition { get; set; }
         public bool Voulenteer { get; set; }
-        public string PersonalDescription { get; set; }
+        public bool Tutor { get; set; }
+        public string Description { get; set; }
         public string EducationalBackRound { get; set; }
         public string References { get; set; }
         public string PhoneNumber { get; set; }
         public string Email { get; set; }
-        public bool Approval { get; set; }
+        public bool IsApproved { get; set; }
 
         [ForeignKey("Mentor")]
 
         public int MentorId { get; set; }
+        public Mentor Mentor { get; set;  }
+
+        [ForeignKey("Admin")]
+        public int AdminId { get; set; }
+        public Admin admin { get; set; }
     }
 }

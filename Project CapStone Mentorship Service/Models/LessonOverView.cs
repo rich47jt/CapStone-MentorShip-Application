@@ -15,9 +15,7 @@ namespace Project_CapStone_Mentorship_Service.Models
         public DateTime End { get; set; }
         public string Description { get; set; }
 
-        [ForeignKey("Mentor")]
-
-        public int MentorId { get; set; }
+      
        
     }
 }
