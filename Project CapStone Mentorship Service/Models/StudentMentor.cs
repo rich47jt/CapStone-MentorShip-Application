@@ -19,7 +19,7 @@ namespace Project_CapStone_Mentorship_Service.Models
 
         [ForeignKey("Studnet")]
 
-        public int Student { get; set; }
+        public int StudentId { get; set; }
         public Student student { get; set; }
 
         [ForeignKey("LessonOverView")]

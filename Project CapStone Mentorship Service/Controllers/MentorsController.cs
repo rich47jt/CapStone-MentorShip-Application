@@ -10,41 +10,23 @@ using Project_CapStone_Mentorship_Service.Models;
 
 namespace Project_CapStone_Mentorship_Service.Controllers
 {
-    public class StudentsController : Controller
+    public class MentorsController : Controller
     {
         private readonly ApplicationDbContext _context;
 
-        public StudentsController(ApplicationDbContext context)
+        public MentorsController(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        // GET: Students
+        // GET: Mentors
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Students.Include(s => s.IdentityUser);
+            var applicationDbContext = _context.Mentors.Include(m => m.IdentityUser);
             return View(await applicationDbContext.ToListAsync());
         }
 
-        public IActionResult ListofMentor(int? id)
-        {
-
-            if (id == null)
-            {
-                return NotFound();
-            }
-            var student = _context.Students.Where(s => s.StudentId == id).FirstOrDefault();
-            var thing = _context.Junctions.Where(j => j.student == student).FirstOrDefault();
-
-            if(thing == null)
-            {
-                return NotFound();
-            }
-
-            return View(thing);
-        }
-
-        // GET: Students/Details/5
+        // GET: Mentors/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -52,42 +34,42 @@ namespace Project_CapStone_Mentorship_Service.Controllers
                 return NotFound();
             }
 
-            var student = await _context.Students
-                .Include(s => s.IdentityUser)
-                .FirstOrDefaultAsync(m => m.StudentId == id);
-            if (student == null)
+            var mentor = await _context.Mentors
+                .Include(m => m.IdentityUser)
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (mentor == null)
             {
                 return NotFound();
             }
 
-            return View(student);
+            return View(mentor);
         }
 
-        // GET: Students/Create
+        // GET: Mentors/Create
         public IActionResult Create()
         {
             ViewData["IdentityUserId"] = new SelectList(_context.Users, "Id", "Id");
             return View();
         }
 
-        // POST: Students/Create
+        // POST: Mentors/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("StudentId,FirstName,LastName,Email,ParentEmail,InstructorEmail,City,IdentityUserId")] Student student)
+        public async Task<IActionResult> Create([Bind("Id,FirstName,LastName,Email,City,SubjectSpeciality,IdentityUserId")] Mentor mentor)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(student);
+                _context.Add(mentor);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["IdentityUserId"] = new SelectList(_context.Users, "Id", "Id", student.IdentityUserId);
-            return View(student);
+            ViewData["IdentityUserId"] = new SelectList(_context.Users, "Id", "Id", mentor.IdentityUserId);
+            return View(mentor);
         }
 
-        // GET: Students/Edit/5
+        // GET: Mentors/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -95,23 +77,23 @@ namespace Project_CapStone_Mentorship_Service.Controllers
                 return NotFound();
             }
 
-            var student = await _context.Students.FindAsync(id);
-            if (student == null)
+            var mentor = await _context.Mentors.FindAsync(id);
+            if (mentor == null)
             {
                 return NotFound();
             }
-            ViewData["IdentityUserId"] = new SelectList(_context.Users, "Id", "Id", student.IdentityUserId);
-            return View(student);
+            ViewData["IdentityUserId"] = new SelectList(_context.Users, "Id", "Id", mentor.IdentityUserId);
+            return View(mentor);
         }
 
-        // POST: Students/Edit/5
+        // POST: Mentors/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("StudentId,FirstName,LastName,Email,ParentEmail,InstructorEmail,City,IdentityUserId")] Student student)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,FirstName,LastName,Email,City,SubjectSpeciality,IdentityUserId")] Mentor mentor)
         {
-            if (id != student.StudentId)
+            if (id != mentor.Id)
             {
                 return NotFound();
             }
@@ -120,12 +102,12 @@ namespace Project_CapStone_Mentorship_Service.Controllers
             {
                 try
                 {
-                    _context.Update(student);
+                    _context.Update(mentor);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!StudentExists(student.StudentId))
+                    if (!MentorExists(mentor.Id))
                     {
                         return NotFound();
                     }
@@ -136,11 +118,11 @@ namespace Project_CapStone_Mentorship_Service.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["IdentityUserId"] = new SelectList(_context.Users, "Id", "Id", student.IdentityUserId);
-            return View(student);
+            ViewData["IdentityUserId"] = new SelectList(_context.Users, "Id", "Id", mentor.IdentityUserId);
+            return View(mentor);
         }
 
-        // GET: Students/Delete/5
+        // GET: Mentors/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -148,31 +130,31 @@ namespace Project_CapStone_Mentorship_Service.Controllers
                 return NotFound();
             }
 
-            var student = await _context.Students
-                .Include(s => s.IdentityUser)
-                .FirstOrDefaultAsync(m => m.StudentId == id);
-            if (student == null)
+            var mentor = await _context.Mentors
+                .Include(m => m.IdentityUser)
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (mentor == null)
             {
                 return NotFound();
             }
 
-            return View(student);
+            return View(mentor);
         }
 
-        // POST: Students/Delete/5
+        // POST: Mentors/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var student = await _context.Students.FindAsync(id);
-            _context.Students.Remove(student);
+            var mentor = await _context.Mentors.FindAsync(id);
+            _context.Mentors.Remove(mentor);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool StudentExists(int id)
+        private bool MentorExists(int id)
         {
-            return _context.Students.Any(e => e.StudentId == id);
+            return _context.Mentors.Any(e => e.Id == id);
         }
     }
 }
