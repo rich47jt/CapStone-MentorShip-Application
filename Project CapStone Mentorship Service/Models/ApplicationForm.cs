@@ -15,9 +15,6 @@ namespace Project_CapStone_Mentorship_Service.Models
         public string Address { get; set; }
         public string City { get; set; }
         public string ZipCode { get; set; }
-        public string DesiredPosition { get; set; }
-        public bool Voulenteer { get; set; }
-        public bool Tutor { get; set; }
         public string Description { get; set; }
         public string EducationalBackRound { get; set; }
         public string References { get; set; }

@@ -16,7 +16,6 @@ namespace Project_CapStone_Mentorship_Service.Models
             public string LastName { get; set; }
             public string Email { get; set; }
             public string City { get; set; }
-            public string EducationalExperinece { get; set; }
             public string SubjectSpeciality { get; set; }
             
 
