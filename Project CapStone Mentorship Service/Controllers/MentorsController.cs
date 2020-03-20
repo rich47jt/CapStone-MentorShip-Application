@@ -26,6 +26,18 @@ namespace Project_CapStone_Mentorship_Service.Controllers
             return View(await applicationDbContext.ToListAsync());
         }
 
+        public IActionResult ListofStudnets(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            var mentor = _context.Mentors.Where(m => m.Id == id).FirstOrDefault();
+            var thing = _context.Junctions.Where(j => j.mentor == mentor).FirstOrDefault();
+
+            return View();
+        }
+
         // GET: Mentors/Details/5
         public async Task<IActionResult> Details(int? id)
         {

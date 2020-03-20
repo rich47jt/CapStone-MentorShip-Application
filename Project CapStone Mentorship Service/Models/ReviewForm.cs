@@ -13,6 +13,7 @@ namespace Project_CapStone_Mentorship_Service.Models
         public int id { get; set; }
         public int rating { get; set; }
         public string Description { get; set; }
+        public string MentorName { get; set; }
 
         
     }

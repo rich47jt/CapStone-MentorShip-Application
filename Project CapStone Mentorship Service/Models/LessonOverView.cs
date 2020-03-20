@@ -14,6 +14,7 @@ namespace Project_CapStone_Mentorship_Service.Models
         public DateTime Start { get; set; }
         public DateTime End { get; set; }
         public string Description { get; set; }
+        public string StudentName { get; set; } 
 
       
        

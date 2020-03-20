@@ -17,6 +17,7 @@ namespace Project_CapStone_Mentorship_Service.Models
             public string Email { get; set; }
             public string City { get; set; }
             public string SubjectSpeciality { get; set; }
+            public string Description { get; set; }
             
 
             [ForeignKey("IdentityUser")]
