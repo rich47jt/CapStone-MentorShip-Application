@@ -26,23 +26,29 @@ namespace Project_CapStone_Mentorship_Service.Controllers
             return View(await applicationDbContext.ToListAsync());
         }
 
-        public IActionResult ListofMentor(int? id)
+        public IActionResult ListofAllMentors()
         {
-
-            if (id == null)
-            {
-                return NotFound();
-            }
-            var student = _context.Students.Where(s => s.StudentId == id).FirstOrDefault();
-            var thing = _context.Junctions.Where(j => j.student == student).FirstOrDefault();
-
-            if(thing == null)
-            {
-                return NotFound();
-            }
-
-            return View(thing);
+            var ThisMentors = _context.Mentors;
+            return View(ThisMentors.ToList());
         }
+
+        public IActionResult AddMentors()
+        {
+            var thisMentor = new Mentor();
+            var junction = _context.Junctions.Where(j => j.mentor == thisMentor);
+            _context.Add(junction);
+            return RedirectToAction(nameof(Index));
+
+        }
+
+        //public IActionResult AddMentor(int? id)
+        //{
+        //    var thisMentor = _context.Mentors.Where(m => m.MentorId == id).FirstOrDefault();
+        //    var junction = _context.Junctions.Where(j => j.mentor == thisMentor);
+        //    _context.Add(junction);
+        //    return RedirectToAction(nameof(Index));
+        //}
+
 
         // GET: Students/Details/5
         public async Task<IActionResult> Details(int? id)

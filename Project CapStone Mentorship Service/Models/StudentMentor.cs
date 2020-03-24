@@ -10,7 +10,7 @@ namespace Project_CapStone_Mentorship_Service.Models
     public class StudentMentor
     {
         [Key]
-        public int Id { get; set; }
+        public int StudnetMentorId { get; set; }
 
         [ForeignKey("Mentor")]
 

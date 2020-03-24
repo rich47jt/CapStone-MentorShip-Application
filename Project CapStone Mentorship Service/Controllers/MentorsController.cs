@@ -26,18 +26,6 @@ namespace Project_CapStone_Mentorship_Service.Controllers
             return View(await applicationDbContext.ToListAsync());
         }
 
-        public IActionResult ListofStudnets(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-            var mentor = _context.Mentors.Where(m => m.Id == id).FirstOrDefault();
-            var thing = _context.Junctions.Where(j => j.mentor == mentor).FirstOrDefault();
-
-            return View();
-        }
-
         // GET: Mentors/Details/5
         public async Task<IActionResult> Details(int? id)
         {
@@ -48,7 +36,7 @@ namespace Project_CapStone_Mentorship_Service.Controllers
 
             var mentor = await _context.Mentors
                 .Include(m => m.IdentityUser)
-                .FirstOrDefaultAsync(m => m.Id == id);
+                .FirstOrDefaultAsync(m => m.MentorId == id);
             if (mentor == null)
             {
                 return NotFound();
@@ -69,7 +57,7 @@ namespace Project_CapStone_Mentorship_Service.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,FirstName,LastName,Email,City,SubjectSpeciality,IdentityUserId")] Mentor mentor)
+        public async Task<IActionResult> Create([Bind("MentorId,FirstName,LastName,Email,City,SubjectSpeciality,Description,IdentityUserId")] Mentor mentor)
         {
             if (ModelState.IsValid)
             {
@@ -103,9 +91,9 @@ namespace Project_CapStone_Mentorship_Service.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,FirstName,LastName,Email,City,SubjectSpeciality,IdentityUserId")] Mentor mentor)
+        public async Task<IActionResult> Edit(int id, [Bind("MentorId,FirstName,LastName,Email,City,SubjectSpeciality,Description,IdentityUserId")] Mentor mentor)
         {
-            if (id != mentor.Id)
+            if (id != mentor.MentorId)
             {
                 return NotFound();
             }
@@ -119,7 +107,7 @@ namespace Project_CapStone_Mentorship_Service.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!MentorExists(mentor.Id))
+                    if (!MentorExists(mentor.MentorId))
                     {
                         return NotFound();
                     }
@@ -144,7 +132,7 @@ namespace Project_CapStone_Mentorship_Service.Controllers
 
             var mentor = await _context.Mentors
                 .Include(m => m.IdentityUser)
-                .FirstOrDefaultAsync(m => m.Id == id);
+                .FirstOrDefaultAsync(m => m.MentorId == id);
             if (mentor == null)
             {
                 return NotFound();
@@ -166,7 +154,7 @@ namespace Project_CapStone_Mentorship_Service.Controllers
 
         private bool MentorExists(int id)
         {
-            return _context.Mentors.Any(e => e.Id == id);
+            return _context.Mentors.Any(e => e.MentorId == id);
         }
     }
 }

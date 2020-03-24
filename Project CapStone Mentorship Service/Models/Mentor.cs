@@ -8,21 +8,30 @@ using Microsoft.AspNetCore.Identity;
 
 namespace Project_CapStone_Mentorship_Service.Models
 {
-        public class Mentor
-        {
-            [Key]
-            public int Id { get; set; }
-            public string FirstName { get; set; }
-            public string LastName { get; set; }
-            public string Email { get; set; }
-            public string City { get; set; }
-            public string SubjectSpeciality { get; set; }
-            public string Description { get; set; }
-            
+    public class Mentor
+    {
+        [Key]
+        public int MentorId { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string Email { get; set; }
+        public string City { get; set; }
+        public string SubjectSpeciality { get; set; }
+        public string Description { get; set; }
 
-            [ForeignKey("IdentityUser")]
-            public string IdentityUserId { get; set; }
-            public IdentityUser IdentityUser { get; set; }
-        }
-    
+
+        [ForeignKey("IdentityUser")]
+        public string IdentityUserId { get; set; }
+        public IdentityUser IdentityUser { get; set; }
+
+        //[ForeignKey("Student")]
+        //public int StudnetId { get; set; }
+        //public Student student { get; set; }
+
+
+
+
+
+    }
+
 }

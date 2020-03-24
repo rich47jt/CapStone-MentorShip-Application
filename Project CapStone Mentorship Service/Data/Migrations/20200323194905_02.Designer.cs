@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Project_CapStone_Mentorship_Service.Data;
 
 namespace Project_CapStone_Mentorship_Service.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200323194905_02")]
+    partial class _02
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -48,22 +50,22 @@ namespace Project_CapStone_Mentorship_Service.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "8762f0bd-3e30-411e-bb62-9d14ac392bb5",
-                            ConcurrencyStamp = "2c0301e4-64eb-484f-86c8-82132aad495d",
+                            Id = "cb4af509-981a-428a-b817-cad173b2c4c9",
+                            ConcurrencyStamp = "bbb52510-ade1-41ed-a111-623feb9a13ae",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "991d3467-5d5f-4598-812a-6bcce263e74d",
-                            ConcurrencyStamp = "73b6b447-2e50-4622-82d1-64bf5286f24f",
+                            Id = "9917bb52-9269-4ab3-b492-401d2c510f0b",
+                            ConcurrencyStamp = "97df5ec1-a81d-4548-b683-5b34de9cfe2d",
                             Name = "Student",
                             NormalizedName = "STUDENT"
                         },
                         new
                         {
-                            Id = "b6e2fc79-99b4-4d3b-82bb-6b5158f4d4d4",
-                            ConcurrencyStamp = "6aa49108-0214-4b29-9782-07c35efb7b82",
+                            Id = "0eacb533-8127-4ef0-b5a2-a3463fd7dcd6",
+                            ConcurrencyStamp = "8ec37b12-7032-401d-8a4b-08dc5c66afba",
                             Name = "Mentor",
                             NormalizedName = "MENTOR"
                         });
@@ -342,7 +344,7 @@ namespace Project_CapStone_Mentorship_Service.Data.Migrations
 
             modelBuilder.Entity("Project_CapStone_Mentorship_Service.Models.LessonOverView", b =>
                 {
-                    b.Property<int>("LessonId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
@@ -359,7 +361,7 @@ namespace Project_CapStone_Mentorship_Service.Data.Migrations
                     b.Property<string>("StudentName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("LessonId");
+                    b.HasKey("Id");
 
                     b.ToTable("Lessons");
                 });

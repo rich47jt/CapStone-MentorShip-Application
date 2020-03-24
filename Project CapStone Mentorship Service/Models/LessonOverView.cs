@@ -10,7 +10,7 @@ namespace Project_CapStone_Mentorship_Service.Models
     public class LessonOverView
     {
         [Key]
-        public int Id { get; set; }
+        public int LessonId { get; set; }
         public DateTime Start { get; set; }
         public DateTime End { get; set; }
         public string Description { get; set; }
