@@ -32,23 +32,45 @@ namespace Project_CapStone_Mentorship_Service.Controllers
             return View(ThisMentors.ToList());
         }
 
-        public IActionResult AddMentors()
-        {
-            var thisMentor = new Mentor();
-            var junction = _context.Junctions.Where(j => j.mentor == thisMentor);
-            _context.Add(junction);
-            return RedirectToAction(nameof(Index));
 
+        public IActionResult AddtoJunction(Student student, Mentor mentor)
+        {
+            StudentMentor junction = new StudentMentor();
+            junction.student = student;
+            junction.mentor = mentor;
+
+            _context.Add(junction);
+            _context.SaveChanges();
+
+            return View();
         }
 
-        //public IActionResult AddMentor(int? id)
-        //{
-        //    var thisMentor = _context.Mentors.Where(m => m.MentorId == id).FirstOrDefault();
-        //    var junction = _context.Junctions.Where(j => j.mentor == thisMentor);
-        //    _context.Add(junction);
-        //    return RedirectToAction(nameof(Index));
-        //}
+        public IActionResult MyListofMentors (int? id)
+        {
+            var junction = _context.Junctions.Where(j => j.student.StudentId == id).FirstOrDefault();
+            var thisMentor = _context.Mentors.Any(j => j.MentorId == junction.mentor.MentorId);
+            return View(thisMentor);
+;       }
 
+        public IActionResult ListofLessons(int id)
+        {
+            var junction = _context.Junctions.Where(j => j.student.StudentId == id).FirstOrDefault();
+            var lesson = _context.Lessons.Any(j => j.LessonId == junction.Lesson.LessonId);
+            return View(lesson);
+        }
+
+        public IActionResult ListofActivities(int id)
+        {
+            var junction = _context.Junctions.Where(j => j.student.StudentId == id).FirstOrDefault();
+            var activity = _context.Activities.Any(j => j.ActivityFormId == junction.activity.ActivityFormId);
+            return View(activity);
+        }
+
+        //public IActionResult ReviewForm()
+        //{
+
+        //    return View();
+        //}
 
         // GET: Students/Details/5
         public async Task<IActionResult> Details(int? id)
