@@ -21,4 +21,9 @@
     <PackageReference Include="SendGrid" Version="9.13.1" />
   </ItemGroup>
 
+
+  <ItemGroup>
+    <Folder Include="Data\Migrations\" />
+  </ItemGroup>
+
 </Project>

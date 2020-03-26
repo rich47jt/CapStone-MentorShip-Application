@@ -22,13 +22,6 @@ namespace Project_CapStone_Mentorship_Service.Models
         public string Email { get; set; }
         public bool IsApproved { get; set; }
 
-        [ForeignKey("Mentor")]
-
-        public int MentorId { get; set; }
-        public Mentor Mentor { get; set;  }
-
-        [ForeignKey("Admin")]
-        public int AdminId { get; set; }
-        public Admin admin { get; set; }
+       
     }
 }
