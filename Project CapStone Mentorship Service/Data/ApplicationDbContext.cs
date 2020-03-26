@@ -22,6 +22,7 @@ namespace Project_CapStone_Mentorship_Service.Data
         public DbSet<StudentMentor> StudentMentors { get; set; }
         public DbSet<StudentMentorLessonActivity> StudentMentorLessonActivities { get; set; }
         public DbSet<ApplicationForm> ApplicationForms { get; set; }
+        public DbSet<Sign_UpForm> Forms { get; set; }
 
 
      

@@ -22,7 +22,7 @@ namespace Project_CapStone_Mentorship_Service.Models
         
 
         [ForeignKey("IdentityUser")]
-        public int IdentityUserId { get; set; }
+        public string IdentityUserId { get; set; }
         public IdentityUser IdentityUser { get; set; } 
 
         [ForeignKey("Sign_UpForm")]

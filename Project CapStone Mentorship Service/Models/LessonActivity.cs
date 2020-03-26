@@ -9,6 +9,7 @@ namespace Project_CapStone_Mentorship_Service.Models
     public class LessonActivity
     {
         [Key]
+        public int LessonActivityId { get; set; }
         public DateTime StartTime { get; set; }
         public DateTime EndTime { get; set; }
         public  string Description { get; set; }
