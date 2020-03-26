@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Project_CapStone_Mentorship_Service.Models
 {
-    public class LessonActivities
+    public class LessonActivity
     {
         [Key]
         public DateTime StartTime { get; set; }

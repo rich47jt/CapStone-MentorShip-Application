@@ -12,18 +12,22 @@ namespace Project_CapStone_Mentorship_Service.Models
     {
         [Key]
         public int StudentId { get; set; }
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
+        public string First_Name { get; set; }
+        public string Last_Name { get; set; }
         public string Email { get; set; }
-        public string ParentEmail { get; set; }
-        public string InstructorEmail { get; set; }
+        public string Parent_Email { get; set; }
+        public string Instructor_Email { get; set; }
         public string City { get; set; }
 
+        
+
         [ForeignKey("IdentityUser")]
-        public string IdentityUserId { get; set; }
+        public int IdentityUserId { get; set; }
         public IdentityUser IdentityUser { get; set; } 
 
-        
+        [ForeignKey("Sign_UpForm")]
+        public int Sign_FormId { get; set; }
+        public Sign_UpForm Form { get; set; }
 
 
     }

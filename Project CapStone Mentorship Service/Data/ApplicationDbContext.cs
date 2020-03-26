@@ -15,6 +15,15 @@ namespace Project_CapStone_Mentorship_Service.Data
         {
         }
 
+        public DbSet<Mentor> Mentors { get; set; }
+        public DbSet<Student> Students { get; set; }
+        public DbSet<LessonActivity> LessonActivities { get; set; }
+        public DbSet<Review> Reviews { get; set; }
+        public DbSet<StudentMentor> StudentMentors { get; set; }
+        public DbSet<StudentMentorLessonActivity> StudentMentorLessonActivities { get; set; }
+        public DbSet<ApplicationForm> ApplicationForms { get; set; }
+
+
      
 
         protected override void OnModelCreating(ModelBuilder builder)

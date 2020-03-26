@@ -11,12 +11,12 @@ namespace Project_CapStone_Mentorship_Service.Models
     {
         [Key]
         public int ApplicationId { get; set; }
-        public string ApplicantName { get; set; }
+        public string Applicant_Name { get; set; }
         public string Address { get; set; }
         public string City { get; set; }
         public string ZipCode { get; set; }
         public string Description { get; set; }
-        public string EducationalBackGround { get; set; }
+        public string Educationalbackground { get; set; }
         public string References { get; set; }
         public string PhoneNumber { get; set; }
         public string Email { get; set; }

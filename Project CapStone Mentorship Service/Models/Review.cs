@@ -7,23 +7,27 @@ using System.Threading.Tasks;
 
 namespace Project_CapStone_Mentorship_Service.Models
 {
-    public class StudentMentors
+    public class Review
     {
         [Key]
-        public int StudentMentorId { get; set; }
+        public int ReviewId { get; set; }
 
+        public string Mentor_Review { get; set; }
+         
         [ForeignKey("Student")]
 
         public int StudentId { get; set; }
 
         public Student student { get; set; }
 
+        
         [ForeignKey("Mentor")]
 
         public int MentorId { get; set; }
 
-        public Mentor mentor { get; set; }
+        public Mentor mentor{ get; set; }
 
+       
 
     }
 }
