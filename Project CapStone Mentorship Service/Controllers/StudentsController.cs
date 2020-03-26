@@ -32,45 +32,46 @@ namespace Project_CapStone_Mentorship_Service.Controllers
             return View(ThisMentors.ToList());
         }
 
-
         public IActionResult AddtoJunction(Student student, Mentor mentor)
         {
-            StudentMentor junction = new StudentMentor();
-            junction.student = student;
-            junction.mentor = mentor;
+            var form = new Sign_UpForm();
+            form = _context.Forms.Where(e => e.student == student).FirstOrDefault();
+            if (form.IsApptoved == true)
+            {
+                StudentMentor junction = new StudentMentor();
+                junction.student = student;
+                junction.mentor = mentor;
 
-            _context.Add(junction);
-            _context.SaveChanges();
 
+                _context.Add(junction);
+                _context.SaveChanges();
+            }
             return View();
         }
 
-        public IActionResult MyListofMentors (int? id)
+        public IActionResult MyListofMentors(int? id)
         {
             var junction = _context.Junctions.Where(j => j.student.StudentId == id).FirstOrDefault();
-            var thisMentor = _context.Mentors.Any(j => j.MentorId == junction.mentor.MentorId);
+            var thisMentor = _context.Mentors.Where(j => j.MentorId == junction.mentor.MentorId).ToList();
             return View(thisMentor);
-;       }
+            ;
+        }
 
         public IActionResult ListofLessons(int id)
         {
             var junction = _context.Junctions.Where(j => j.student.StudentId == id).FirstOrDefault();
-            var lesson = _context.Lessons.Any(j => j.LessonId == junction.Lesson.LessonId);
+            var lesson = _context.Lessons.Where(j => j.LessonId == junction.Lesson.LessonId).ToList();
             return View(lesson);
         }
 
         public IActionResult ListofActivities(int id)
         {
             var junction = _context.Junctions.Where(j => j.student.StudentId == id).FirstOrDefault();
-            var activity = _context.Activities.Any(j => j.ActivityFormId == junction.activity.ActivityFormId);
+            var activity = _context.Activities.Where(j => j.ActivityFormId == junction.activity.ActivityFormId).ToList();
             return View(activity);
         }
 
-        //public IActionResult ReviewForm()
-        //{
 
-        //    return View();
-        //}
 
         // GET: Students/Details/5
         public async Task<IActionResult> Details(int? id)

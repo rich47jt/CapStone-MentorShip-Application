@@ -24,9 +24,7 @@ namespace Project_CapStone_Mentorship_Service.Models
         public string IdentityUserId { get; set; }
         public IdentityUser IdentityUser { get; set; }
 
-        //[ForeignKey("Student")]
-        //public int StudnetId { get; set; }
-        //public Student student { get; set; }
+         
 
 
 

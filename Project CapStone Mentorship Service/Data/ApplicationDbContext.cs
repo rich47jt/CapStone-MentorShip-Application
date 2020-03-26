@@ -23,6 +23,7 @@ namespace Project_CapStone_Mentorship_Service.Data
         public DbSet<ActivityForm> Activities { get; set; }
         public DbSet<ReviewForm>  Reviews {get; set;}
         public DbSet<ApplicationForm> Applications { get; set; }
+        public DbSet<Sign_UpForm> Forms { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

@@ -28,15 +28,20 @@ namespace Project_CapStone_Mentorship_Service.Controllers
 
         public IActionResult ListofStudents(int? id)
         {
-            var junction = _context.Junctions.Where(j => j.mentor.MentorId == id).FirstOrDefault();
-            var studnet = _context.Students.Any(s => s.StudentId == junction.student.StudentId);
-            return View(junction);
+            var approved = _context.Forms.Where(e => e.mentor.MentorId == id).FirstOrDefault();
+            if (approved.IsApptoved == true)
+            {
+                var junction = _context.Junctions.Where(j => j.mentor.MentorId == id).FirstOrDefault();
+                var studnet = _context.Students.Where(s => s.StudentId == junction.student.StudentId).ToList();
+                return View(studnet);
+
+            }
+            return View();
         }
 
-       
-
-        // GET: Mentors/Details/5
-        public async Task<IActionResult> Details(int? id)
+          
+            // GET: Mentors/Details/5
+            public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
             {
