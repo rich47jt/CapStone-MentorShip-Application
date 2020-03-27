@@ -20,7 +20,17 @@ namespace Project_CapStone_Mentorship_Service.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            if (User.IsInRole("Mentor"))
+            {
+                return RedirectToAction("Index", "Mentor");
+
+            }
+            else if (User.IsInRole("Student"))
+            {
+                return RedirectToAction("Index", "Student");
+            }
+            return Redirect("/Identity/Account/Login");
+
         }
 
         public IActionResult Privacy()

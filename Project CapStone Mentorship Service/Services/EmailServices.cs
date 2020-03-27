@@ -10,10 +10,6 @@ namespace Project_CapStone_Mentorship_Service.Services
 {
     public class EmailServices
     {
-        private static void Main()
-        {
-            Execute().Wait();
-        }
 
         static async Task Execute()
         {
