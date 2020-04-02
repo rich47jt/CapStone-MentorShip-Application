@@ -22,12 +22,16 @@ namespace Project_CapStone_Mentorship_Service.Controllers
         {
             if (User.IsInRole("Mentor"))
             {
-                return RedirectToAction("Index", "Mentor");
+                return RedirectToAction("Create", "Mentors");
 
             }
             else if (User.IsInRole("Student"))
             {
-                return RedirectToAction("Index", "Student");
+                return RedirectToAction("Create", "Students");
+            }
+            else if(User.IsInRole("Admin"))
+            {
+                return RedirectToAction("ListofApplcations, Admin");
             }
             return Redirect("/Identity/Account/Login");
 
