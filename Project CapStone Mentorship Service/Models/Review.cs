@@ -11,20 +11,18 @@ namespace Project_CapStone_Mentorship_Service.Models
     {
         [Key]
         public int ReviewId { get; set; }
+        public string Mentor_Name { get; set; }
+        public string Description { get; set; }
+        public float Rating { get; set; }
 
-        public string Mentor_Review { get; set; }
          
         [ForeignKey("Student")]
-
         public int StudentId { get; set; }
-
         public Student student { get; set; }
 
         
         [ForeignKey("Mentor")]
-
         public int MentorId { get; set; }
-
         public Mentor mentor{ get; set; }
 
        

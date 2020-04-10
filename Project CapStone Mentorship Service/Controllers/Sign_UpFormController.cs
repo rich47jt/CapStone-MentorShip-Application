@@ -50,8 +50,8 @@ namespace Project_CapStone_Mentorship_Service.Controllers
         }
 
         // POST: Sign_UpForm/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
+        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("FormId,Studnet_Name,Need_for_Academic_Help,Mentor_Name,IsTutor")] Sign_UpForm sign_UpForm)
@@ -66,7 +66,7 @@ namespace Project_CapStone_Mentorship_Service.Controllers
         }
 
         // GET: Sign_UpForm/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
             {
@@ -82,8 +82,8 @@ namespace Project_CapStone_Mentorship_Service.Controllers
         }
 
         // POST: Sign_UpForm/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
+        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("FormId,Studnet_Name,Need_for_Academic_Help,Mentor_Name,IsTutor")] Sign_UpForm sign_UpForm)

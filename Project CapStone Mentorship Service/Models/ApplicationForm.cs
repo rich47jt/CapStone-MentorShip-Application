@@ -17,8 +17,6 @@ namespace Project_CapStone_Mentorship_Service.Models
         public string ZipCode { get; set; }
         public string Description { get; set; }
         public string Educationalbackground { get; set; }
-        public string References { get; set; }
-        public string PhoneNumber { get; set; }
         public string Email { get; set; }
         public bool IsApproved { get; set; }
 

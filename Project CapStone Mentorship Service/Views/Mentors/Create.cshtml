@@ -1,4 +1,4 @@
-﻿@model Project_CapStone_Mentorship_Service.Views.MentorCreateViewModel
+﻿@model Project_CapStone_Mentorship_Service.Models.Mentor
 
 @{
     ViewData["Title"] = "Create";
@@ -11,7 +11,7 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form enctype="multipart/form-data" asp-action="Create">
+        <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="First_Name" class="control-label"></label>
@@ -39,32 +39,18 @@
                 <span asp-validation-for="Subject_Specialty" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Description" class="control-label"></label>
-                <input asp-for="Description" class="form-control" />
-                <span asp-validation-for="Description" class="text-danger"></span>
+                <label asp-for="IdentityUserId" class="control-label"></label>
+                <select asp-for="IdentityUserId" class ="form-control" asp-items="ViewBag.IdentityUserId"></select>
             </div>
             <div class="form-group">
-                <label asp-for="Photo" class="control-label"></label>
-                <div class="custom-file">
-                    <input asp-for="Photo" class="from control-label custom-file-input">
-                    <label class=" custom-file-label">Choose File...</label>
-                </div>
+                <label asp-for="ApplicantFromId" class="control-label"></label>
+                <input asp-for="ApplicantFromId" class="form-control" />
+                <span asp-validation-for="ApplicantFromId" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
         </form>
-
-        @section Scripts{
-            <script>
-                $(document).ready(function () {
-                    $('custom-file input').on("change", function () {
-                        var filename = $(this).val().split("\\").pop();
-                        $(this).next('custome-file-label').html(filename);
-                    });
-                }
-            </script>
-         }
     </div>
 </div>
 

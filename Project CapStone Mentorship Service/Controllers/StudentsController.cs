@@ -1,6 +1,7 @@
-﻿ using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -22,47 +23,84 @@ namespace Project_CapStone_Mentorship_Service.Controllers
         // GET: Students
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Students.Include(s => s.IdentityUser);
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var applicationDbContext = _context.Students.Where(s => s.IdentityUserId == userId);
             return View(await applicationDbContext.ToListAsync());
         }
 
-        public IActionResult ListofAllMentors()
+        public IActionResult List_of_All_Mentors()
         {
             var mentors = _context.Mentors;
             return View(mentors.ToList());
         }
 
-        public IActionResult AddtoJunction(Student student, Mentor mentor)
+        public IActionResult Add_to_StudentMentor(int? id)
         {
-            StudentMentor studentMentor = new StudentMentor();
-            var form = _context.Forms.Where(f => f.IsTutor == student.Form.IsTutor).FirstOrDefault();
-            if(form.IsTutor == true)
+            var student = _context.Students.Where(s => s.StudentId == id).FirstOrDefault();
+            var sign_in = _context.Forms.Where(f => f.FormId == student.Sign_FormId).FirstOrDefault();
+            var mentor = _context.Mentors.Where(m => m.First_Name == sign_in.Mentor_Name).FirstOrDefault();
+            var junctions = _context.StudentMentors.Where(sm => sm.mentor == mentor && sm.student == student).FirstOrDefault();
+
+            if (sign_in.IsTutor == true)
             {
-                studentMentor.StudentId = student.StudentId;
-                studentMentor.MentorId = mentor.MentorId;
-                _context.Add(studentMentor);
+                if (sign_in.Mentor_Name == mentor.First_Name)
+                _context.Add(junctions);
                 _context.SaveChanges();
             }
-
-            return View();
+            return View(mentor);
+           
         }
 
-        public IActionResult MyMentors(int? id)
+        public IActionResult List_of_My_Mentors(int? id)
         {
-            var studnet = _context.Students.Where(s => s.StudentId == id).FirstOrDefault();
-            var junction = _context.StudentMentors.Where(sm => sm.StudentId == studnet.StudentId).FirstOrDefault();
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var student = _context.Students.Where(s => s.StudentId == id && s.IdentityUserId == userId).FirstOrDefault();
+            var junction = _context.StudentMentors.Where(sm => sm.student.StudentId == student.StudentId).FirstOrDefault();
             var mentor = _context.Mentors.Where(m => m.MentorId == junction.MentorId).ToList();
-
             return View(mentor);
         }
 
-        public IActionResult ListofEvent_Lessons(int? id)
+        public IActionResult Add_Activity_to_Activty(int? id)
+        {
+            var student = _context.StudentMentors.Where(sm => sm.student.StudentId == id).FirstOrDefault();
+            var activity = _context.LessonActivities.Where(l => l.Student_Name == student.student.First_Name).FirstOrDefault();
+            var junction = _context.StudentMentorLessonActivities.Where(sl => sl.studentMentor == student && sl.lessonActivity == activity).FirstOrDefault();
+            var sign_in = _context.Forms.Where(f => f.FormId == student.student.Form.FormId).FirstOrDefault();
+
+            if (sign_in.IsTutor == true)
+            {
+                if(sign_in.Studnet_Name == student.student.First_Name)
+                {
+                    _context.Add(junction);
+                    _context.SaveChanges();
+                }
+            }
+
+
+            return View(activity);
+        }
+
+        public IActionResult Search_By_Location(int? id)
+        {
+            var students = _context.Students.Where(s => s.StudentId == id).FirstOrDefault();
+            var mentor = _context.Mentors.Include(m => m.City).FirstOrDefault();
+
+            if (mentor.City == students.City)
+            {
+                return View(mentor);
+            }
+            return View();
+            
+            
+        }
+
+
+        public IActionResult List_of_My_LessonActivities(int? id)
         {
             var studnet = _context.Students.Where(s => s.StudentId == id).FirstOrDefault();
-            var junction = _context.StudentMentorLessonActivities.Where(s => s.studentMentor.StudentId == studnet.StudentId).FirstOrDefault();
-            var lesson_activies = _context.LessonActivities.Where(l => l.LessonActivityId == junction.lessonActivity.LessonActivityId).ToList();
-            
-            return View(lesson_activies);
+            var junction = _context.StudentMentorLessonActivities.Where(l => l.studentMentor.student == studnet).FirstOrDefault();
+            var lesson = _context.LessonActivities.Where(l => l.LessonActivityId == junction.lessonActivity.LessonActivityId).ToList();
+            return View(lesson);
         }
 
 
@@ -94,8 +132,8 @@ namespace Project_CapStone_Mentorship_Service.Controllers
         }
 
         // POST: Students/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
+        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("StudentId,First_Name,Last_Name,Email,Parent_Email,Instructor_Email,City,IdentityUserId,Sign_FormId")] Student student)
@@ -109,8 +147,6 @@ namespace Project_CapStone_Mentorship_Service.Controllers
             ViewData["IdentityUserId"] = new SelectList(_context.Users, "Id", "Id", student.IdentityUserId);
             return View(student);
         }
-
-
 
         // GET: Students/Edit/5
         public async Task<IActionResult> Edit(int? id)
@@ -130,8 +166,8 @@ namespace Project_CapStone_Mentorship_Service.Controllers
         }
 
         // POST: Students/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
+        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("StudentId,First_Name,Last_Name,Email,Parent_Email,Instructor_Email,City,IdentityUserId,Sign_FormId")] Student student)

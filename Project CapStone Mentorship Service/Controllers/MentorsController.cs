@@ -1,24 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Project_CapStone_Mentorship_Service.Data;
 using Project_CapStone_Mentorship_Service.Models;
-using Project_CapStone_Mentorship_Service.Views;
 
 namespace Project_CapStone_Mentorship_Service.Controllers
 {
-    public class MentorsController : Controller 
+    public class MentorsController : Controller
     {
         private readonly ApplicationDbContext _context;
-        private readonly IHostingEnvironment hostingEnvironment;
 
-        public MentorsController(ApplicationDbContext context, IHostingEnvironment hostingEnvironment)
+        public MentorsController(ApplicationDbContext context)
         {
             _context = context;
         }
@@ -26,17 +23,19 @@ namespace Project_CapStone_Mentorship_Service.Controllers
         // GET: Mentors
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Mentors.Include(m => m.IdentityUser);
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var applicationDbContext = _context.Mentors.Where(m => m.IdentityUserId == userId);
             return View(await applicationDbContext.ToListAsync());
         }
 
-        public IActionResult ListofStudnent(int? id)
+        public IActionResult List_of_My_Student(int? id)
         {
             var mentor = _context.Mentors.Where(m => m.MentorId == id).FirstOrDefault();
-            var junction = _context.StudentMentors.Where(m => m.mentor.MentorId == mentor.MentorId).FirstOrDefault();
-            var students = _context.Students.Where(s => s.StudentId == junction.StudentId).ToList();
-            return View(students);
+            var junction = _context.StudentMentors.Where(sm => sm.mentor.MentorId == mentor.MentorId).FirstOrDefault();
+            var student = _context.Students.Where(s => s.StudentId == junction.StudentId).ToList();
+            return View(student);
         }
+
 
         // GET: Mentors/Details/5
         public async Task<IActionResult> Details(int? id)
@@ -65,47 +64,21 @@ namespace Project_CapStone_Mentorship_Service.Controllers
         }
 
         // POST: Mentors/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> Create([Bind("MentorId,First_Name,Last_Name,Email,City,Subject_Specialty,Description,IdentityUserId,ApplicantFromId")] Mentor mentor)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        _context.Add(mentor);
-        //        await _context.SaveChangesAsync();
-        //        return RedirectToAction(nameof(Index));
-        //    }
-        //    ViewData["IdentityUserId"] = new SelectList(_context.Users, "Id", "Id", mentor.IdentityUserId);
-        //    return View(mentor);
-        //}
-
+        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
+        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create (MentorCreateViewModel model)
+        public async Task<IActionResult> Create([Bind("MentorId,First_Name,Last_Name,Email,City,Subject_Specialty,IdentityUserId,ApplicantFromId")] Mentor mentor)
         {
+            
             if (ModelState.IsValid)
             {
-                string uniquefilename = null;
-                if(model.Photo!= null)
-                {
-                 string uploadfolder = Path.Combine(hostingEnvironment.WebRootPath, "imgaes");
-                 uniquefilename = Guid.NewGuid().ToString() + "_" + model.Photo.FileName;
-                    string filepath = Path.Combine(uploadfolder, uniquefilename);
-                    model.Photo.CopyTo(new FileStream(filepath, FileMode.Create));
-                }
-
-                Mentor mentor = new Mentor
-                {
-                    First_Name = model.First_Name,
-                    Last_Name = model.Last_Name,
-                    PhotoPath = uniquefilename
-                };
                 _context.Add(mentor);
-                return RedirectToAction("details", new { id = mentor.MentorId });
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
             }
-           return View();
+            ViewData["IdentityUserId"] = new SelectList(_context.Users, "Id", "Id", mentor.IdentityUserId);
+            return View(mentor);
         }
 
         // GET: Mentors/Edit/5
@@ -126,11 +99,11 @@ namespace Project_CapStone_Mentorship_Service.Controllers
         }
 
         // POST: Mentors/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
+        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("MentorId,First_Name,Last_Name,Email,City,Subject_Specialty,Description,IdentityUserId,ApplicantFromId")] Mentor mentor)
+        public async Task<IActionResult> Edit(int id, [Bind("MentorId,First_Name,Last_Name,Email,City,Subject_Specialty,IdentityUserId,ApplicantFromId")] Mentor mentor)
         {
             if (id != mentor.MentorId)
             {

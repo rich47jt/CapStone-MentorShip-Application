@@ -1,4 +1,4 @@
-﻿using System;
+﻿ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -13,7 +13,7 @@ namespace Project_CapStone_Mentorship_Service.Models
         public int StudentMentorLessonActivityId { get; set; }
 
         [ForeignKey("StudentMentors")]
-
+         
         public int StudentMentorId { get; set; }
 
         public StudentMentor studentMentor { get; set; }

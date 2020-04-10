@@ -1,11 +1,11 @@
-﻿@model IEnumerable<Project_CapStone_Mentorship_Service.Models.Student>
+﻿@model IEnumerable<Project_CapStone_Mentorship_Service.Models.Mentor>
 
 @{
-    ViewData["Title"] = "MyMentors";
+    ViewData["Title"] = "Search_By_Location";
     Layout = "~/Views/Shared/StudentLayout.cshtml";
 }
 
-<h1>MyMentors</h1>
+<h1>Search_By_Location</h1>
 
 <p>
     <a asp-action="Create">Create New</a>
@@ -23,19 +23,16 @@
                 @Html.DisplayNameFor(model => model.Email)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Parent_Email)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Instructor_Email)
-            </th>
-            <th>
                 @Html.DisplayNameFor(model => model.City)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Subject_Specialty)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.IdentityUser)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Sign_FormId)
+                @Html.DisplayNameFor(model => model.ApplicantFromId)
             </th>
             <th></th>
         </tr>
@@ -53,24 +50,21 @@
                 @Html.DisplayFor(modelItem => item.Email)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Parent_Email)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Instructor_Email)
-            </td>
-            <td>
                 @Html.DisplayFor(modelItem => item.City)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Subject_Specialty)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.IdentityUser.Id)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Sign_FormId)
+                @Html.DisplayFor(modelItem => item.ApplicantFromId)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.StudentId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.StudentId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.StudentId">Delete</a>
+                <a asp-action="Edit" asp-route-id="@item.MentorId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.MentorId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.MentorId">Delete</a>
             </td>
         </tr>
 }

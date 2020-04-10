@@ -1,11 +1,11 @@
 ﻿@model IEnumerable<Project_CapStone_Mentorship_Service.Models.Mentor>
 
 @{
-    ViewData["Title"] = "ListofStudnent";
-    Layout = "~/Views/Shared/MentorLayout.cshtml";
+    ViewData["Title"] = "Add_to_StudentMentor";
+    Layout = "~/Views/Shared/StudentLayout.cshtml";
 }
 
-<h1>ListofStudnent</h1>
+<h1>Add_to_StudentMentor</h1>
 
 <p>
     <a asp-action="Create">Create New</a>
@@ -28,18 +28,12 @@
             <th>
                 @Html.DisplayNameFor(model => model.Subject_Specialty)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Description)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.PhotoPath)
-            </th>
-            <th>
+            @*<th>
                 @Html.DisplayNameFor(model => model.IdentityUser)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.ApplicantFromId)
-            </th>
+            </th>*@
             <th></th>
         </tr>
     </thead>
@@ -61,22 +55,16 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Subject_Specialty)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Description)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PhotoPath)
-            </td>
-            <td>
+            @*<td>
                 @Html.DisplayFor(modelItem => item.IdentityUser.Id)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.ApplicantFromId)
-            </td>
+            </td>*@
             <td>
-                <a asp-action="Edit" asp-route-id="@item.MentorId">Edit</a> |
+                @*<a asp-action="Edit" asp-route-id="@item.MentorId">Edit</a> |*@
                 <a asp-action="Details" asp-route-id="@item.MentorId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.MentorId">Delete</a>
+                @*<a asp-action="Delete" asp-route-id="@item.MentorId">Delete</a>*@
             </td>
         </tr>
 }

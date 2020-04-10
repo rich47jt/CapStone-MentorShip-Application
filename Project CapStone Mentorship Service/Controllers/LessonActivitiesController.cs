@@ -50,11 +50,11 @@ namespace Project_CapStone_Mentorship_Service.Controllers
         }
 
         // POST: LessonActivities/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
+        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("LessonActivityId,StartTime,EndTime,Description,Type")] LessonActivity lessonActivity)
+        public async Task<IActionResult> Create([Bind("LessonActivityId,Student_Name,Mentor_Name,StartTime,EndTime,Description,Type")] LessonActivity lessonActivity)
         {
             if (ModelState.IsValid)
             {
@@ -82,11 +82,11 @@ namespace Project_CapStone_Mentorship_Service.Controllers
         }
 
         // POST: LessonActivities/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
+        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("LessonActivityId,StartTime,EndTime,Description,Type")] LessonActivity lessonActivity)
+        public async Task<IActionResult> Edit(int id, [Bind("LessonActivityId,Student_Name,Mentor_Name,StartTime,EndTime,Description,Type")] LessonActivity lessonActivity)
         {
             if (id != lessonActivity.LessonActivityId)
             {

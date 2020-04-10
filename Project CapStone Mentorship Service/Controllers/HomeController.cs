@@ -22,12 +22,12 @@ namespace Project_CapStone_Mentorship_Service.Controllers
         {
             if (User.IsInRole("Mentor"))
             {
-                return RedirectToAction("Create", "Mentors");
+                return RedirectToAction("Index", "Mentors");
 
             }
             else if (User.IsInRole("Student"))
             {
-                return RedirectToAction("Create", "Students");
+                return RedirectToAction("Index", "Students");
             }
             else if(User.IsInRole("Admin"))
             {
@@ -35,6 +35,11 @@ namespace Project_CapStone_Mentorship_Service.Controllers
             }
             return Redirect("/Identity/Account/Login");
 
+        }
+
+        public IActionResult Maps()
+        {
+            return RedirectToAction("Home","Maps");
         }
 
         public IActionResult Privacy()

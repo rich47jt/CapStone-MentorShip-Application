@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.VisualStudio.Web.CodeGeneration.Contracts.Messaging;
 
 namespace Project_CapStone_Mentorship_Service.Models
 {
@@ -17,9 +18,8 @@ namespace Project_CapStone_Mentorship_Service.Models
         public string Email { get; set; }
         public string City { get; set; }
         public string Subject_Specialty { get; set; }
-        public string Description { get; set; }
-        public string PhotoPath { get; set; }
-   
+       
+       
         [ForeignKey("IdentityUser")]
         public string IdentityUserId { get; set; }
         public IdentityUser IdentityUser { get; set; }
@@ -29,9 +29,10 @@ namespace Project_CapStone_Mentorship_Service.Models
         public int ApplicantFromId { get; set; }
         public ApplicationForm applicationForm { get; set; }
 
-
-
+        
 
     }
+
+    
 
 }

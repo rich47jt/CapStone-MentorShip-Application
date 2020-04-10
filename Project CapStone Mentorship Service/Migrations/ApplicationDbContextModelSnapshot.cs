@@ -15,7 +15,7 @@ namespace Project_CapStone_Mentorship_Service.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "3.1.2")
+                .HasAnnotation("ProductVersion", "3.1.3")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -48,22 +48,22 @@ namespace Project_CapStone_Mentorship_Service.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "75a2b900-7eb5-4ead-ad8a-834e37870858",
-                            ConcurrencyStamp = "02f491d4-d67e-4687-aeae-71586b4ed0b5",
+                            Id = "df4e7561-1540-4c0c-aec9-29dabf483882",
+                            ConcurrencyStamp = "f28d581f-00fe-4616-a1bd-cde5e47709b4",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "fb798f13-8426-43a0-ab2e-474a36d9032b",
-                            ConcurrencyStamp = "202fa78d-2b78-4bb7-845e-a245f5422d86",
+                            Id = "e4cfb8fd-173a-43d8-9599-07a6065e824f",
+                            ConcurrencyStamp = "350fbc89-6a77-49e4-b01a-49d1647d9b55",
                             Name = "Student",
                             NormalizedName = "STUDENT"
                         },
                         new
                         {
-                            Id = "8452c100-56d7-4ee8-a2ec-9f813f5d3d2b",
-                            ConcurrencyStamp = "959db35f-fffb-46cf-8b7c-0fe28dee91d3",
+                            Id = "d018dc4e-fe94-4084-a69b-72792375b441",
+                            ConcurrencyStamp = "a7829bb6-00e7-47d9-a8da-a7232d8804c9",
                             Name = "Mentor",
                             NormalizedName = "MENTOR"
                         });
@@ -266,24 +266,20 @@ namespace Project_CapStone_Mentorship_Service.Migrations
                     b.Property<bool>("IsApproved")
                         .HasColumnType("bit");
 
-                    b.Property<string>("PhoneNumber")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("References")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("ZipCode")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ApplicationId");
 
-                    b.ToTable("ApplicationForms");
+                    b.ToTable("Applications");
                 });
 
             modelBuilder.Entity("Project_CapStone_Mentorship_Service.Models.LessonActivity", b =>
                 {
-                    b.Property<DateTime>("StartTime")
-                        .HasColumnType("datetime2");
+                    b.Property<int>("LessonActivityId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
@@ -291,10 +287,13 @@ namespace Project_CapStone_Mentorship_Service.Migrations
                     b.Property<DateTime>("EndTime")
                         .HasColumnType("datetime2");
 
+                    b.Property<DateTime>("StartTime")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Type")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("StartTime");
+                    b.HasKey("LessonActivityId");
 
                     b.ToTable("LessonActivities");
                 });
@@ -310,9 +309,6 @@ namespace Project_CapStone_Mentorship_Service.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("City")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Email")
@@ -349,11 +345,17 @@ namespace Project_CapStone_Mentorship_Service.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("MentorId")
                         .HasColumnType("int");
 
-                    b.Property<string>("Mentor_Review")
+                    b.Property<string>("Mentor_Name")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<float>("Rating")
+                        .HasColumnType("real");
 
                     b.Property<int>("StudentId")
                         .HasColumnType("int");
@@ -466,17 +468,17 @@ namespace Project_CapStone_Mentorship_Service.Migrations
                     b.Property<int>("LessonActivity")
                         .HasColumnType("int");
 
+                    b.Property<int?>("LessonActivityId")
+                        .HasColumnType("int");
+
                     b.Property<int>("StudentMentorId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime?>("lessonActivityStartTime")
-                        .HasColumnType("datetime2");
-
                     b.HasKey("StudentMentorLessonActivityId");
 
-                    b.HasIndex("StudentMentorId");
+                    b.HasIndex("LessonActivityId");
 
-                    b.HasIndex("lessonActivityStartTime");
+                    b.HasIndex("StudentMentorId");
 
                     b.ToTable("StudentMentorLessonActivities");
                 });
@@ -586,15 +588,15 @@ namespace Project_CapStone_Mentorship_Service.Migrations
 
             modelBuilder.Entity("Project_CapStone_Mentorship_Service.Models.StudentMentorLessonActivity", b =>
                 {
+                    b.HasOne("Project_CapStone_Mentorship_Service.Models.LessonActivity", "lessonActivity")
+                        .WithMany()
+                        .HasForeignKey("LessonActivityId");
+
                     b.HasOne("Project_CapStone_Mentorship_Service.Models.StudentMentor", "studentMentor")
                         .WithMany()
                         .HasForeignKey("StudentMentorId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.HasOne("Project_CapStone_Mentorship_Service.Models.LessonActivity", "lessonActivity")
-                        .WithMany()
-                        .HasForeignKey("lessonActivityStartTime");
                 });
 #pragma warning restore 612, 618
         }

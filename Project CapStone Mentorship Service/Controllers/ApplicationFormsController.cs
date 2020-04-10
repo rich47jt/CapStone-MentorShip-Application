@@ -22,7 +22,7 @@ namespace Project_CapStone_Mentorship_Service.Controllers
         // GET: ApplicationForms
         public async Task<IActionResult> Index()
         {
-            return View(await _context.ApplicationForms.ToListAsync());
+            return View(await _context.Applications.ToListAsync());
         }
 
         // GET: ApplicationForms/Details/5
@@ -33,7 +33,7 @@ namespace Project_CapStone_Mentorship_Service.Controllers
                 return NotFound();
             }
 
-            var applicationForm = await _context.ApplicationForms
+            var applicationForm = await _context.Applications
                 .FirstOrDefaultAsync(m => m.ApplicationId == id);
             if (applicationForm == null)
             {
@@ -50,11 +50,11 @@ namespace Project_CapStone_Mentorship_Service.Controllers
         }
 
         // POST: ApplicationForms/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
+        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ApplicationId,Applicant_Name,Address,City,ZipCode,Description,Educationalbackground,References,PhoneNumber,Email,IsApproved")] ApplicationForm applicationForm)
+        public async Task<IActionResult> Create([Bind("ApplicationId,Applicant_Name,Address,City,ZipCode,Description,Educationalbackground,Email,IsApproved")] ApplicationForm applicationForm)
         {
             if (ModelState.IsValid)
             {
@@ -73,7 +73,7 @@ namespace Project_CapStone_Mentorship_Service.Controllers
                 return NotFound();
             }
 
-            var applicationForm = await _context.ApplicationForms.FindAsync(id);
+            var applicationForm = await _context.Applications.FindAsync(id);
             if (applicationForm == null)
             {
                 return NotFound();
@@ -82,11 +82,11 @@ namespace Project_CapStone_Mentorship_Service.Controllers
         }
 
         // POST: ApplicationForms/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
+        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ApplicationId,Applicant_Name,Address,City,ZipCode,Description,Educationalbackground,References,PhoneNumber,Email,IsApproved")] ApplicationForm applicationForm)
+        public async Task<IActionResult> Edit(int id, [Bind("ApplicationId,Applicant_Name,Address,City,ZipCode,Description,Educationalbackground,Email,IsApproved")] ApplicationForm applicationForm)
         {
             if (id != applicationForm.ApplicationId)
             {
@@ -124,7 +124,7 @@ namespace Project_CapStone_Mentorship_Service.Controllers
                 return NotFound();
             }
 
-            var applicationForm = await _context.ApplicationForms
+            var applicationForm = await _context.Applications
                 .FirstOrDefaultAsync(m => m.ApplicationId == id);
             if (applicationForm == null)
             {
@@ -139,15 +139,15 @@ namespace Project_CapStone_Mentorship_Service.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var applicationForm = await _context.ApplicationForms.FindAsync(id);
-            _context.ApplicationForms.Remove(applicationForm);
+            var applicationForm = await _context.Applications.FindAsync(id);
+            _context.Applications.Remove(applicationForm);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool ApplicationFormExists(int id)
         {
-            return _context.ApplicationForms.Any(e => e.ApplicationId == id);
+            return _context.Applications.Any(e => e.ApplicationId == id);
         }
     }
 }

@@ -1,18 +1,19 @@
 ﻿@model Project_CapStone_Mentorship_Service.Models.LessonActivity
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Edit";
     Layout = "~/Views/Shared/MentorLayout.cshtml";
 }
 
-<h1>Create</h1>
+<h1>Edit</h1>
 
 <h4>LessonActivity</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Create">
+        <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="LessonActivityId" />
             <div class="form-group">
                 <label asp-for="Student_Name" class="control-label"></label>
                 <input asp-for="Student_Name" class="form-control" />
@@ -44,7 +45,7 @@
                 <span asp-validation-for="Type" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="Save" class="btn btn-primary" />
             </div>
         </form>
     </div>

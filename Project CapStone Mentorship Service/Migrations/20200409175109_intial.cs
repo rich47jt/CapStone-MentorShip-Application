@@ -8,7 +8,7 @@ namespace Project_CapStone_Mentorship_Service.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "ApplicationForms",
+                name: "Applications",
                 columns: table => new
                 {
                     ApplicationId = table.Column<int>(nullable: false)
@@ -19,14 +19,12 @@ namespace Project_CapStone_Mentorship_Service.Migrations
                     ZipCode = table.Column<string>(nullable: true),
                     Description = table.Column<string>(nullable: true),
                     Educationalbackground = table.Column<string>(nullable: true),
-                    References = table.Column<string>(nullable: true),
-                    PhoneNumber = table.Column<string>(nullable: true),
                     Email = table.Column<string>(nullable: true),
                     IsApproved = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ApplicationForms", x => x.ApplicationId);
+                    table.PrimaryKey("PK_Applications", x => x.ApplicationId);
                 });
 
             migrationBuilder.CreateTable(
@@ -88,6 +86,8 @@ namespace Project_CapStone_Mentorship_Service.Migrations
                 name: "LessonActivities",
                 columns: table => new
                 {
+                    LessonActivityId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     StartTime = table.Column<DateTime>(nullable: false),
                     EndTime = table.Column<DateTime>(nullable: false),
                     Description = table.Column<string>(nullable: true),
@@ -95,7 +95,7 @@ namespace Project_CapStone_Mentorship_Service.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_LessonActivities", x => x.StartTime);
+                    table.PrimaryKey("PK_LessonActivities", x => x.LessonActivityId);
                 });
 
             migrationBuilder.CreateTable(
@@ -215,7 +215,6 @@ namespace Project_CapStone_Mentorship_Service.Migrations
                     Email = table.Column<string>(nullable: true),
                     City = table.Column<string>(nullable: true),
                     Subject_Specialty = table.Column<string>(nullable: true),
-                    Description = table.Column<string>(nullable: true),
                     IdentityUserId = table.Column<string>(nullable: true),
                     ApplicantFromId = table.Column<int>(nullable: false),
                     applicationFormApplicationId = table.Column<int>(nullable: true)
@@ -230,9 +229,9 @@ namespace Project_CapStone_Mentorship_Service.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Mentors_ApplicationForms_applicationFormApplicationId",
+                        name: "FK_Mentors_Applications_applicationFormApplicationId",
                         column: x => x.applicationFormApplicationId,
-                        principalTable: "ApplicationForms",
+                        principalTable: "Applications",
                         principalColumn: "ApplicationId",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -276,7 +275,9 @@ namespace Project_CapStone_Mentorship_Service.Migrations
                 {
                     ReviewId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Mentor_Review = table.Column<string>(nullable: true),
+                    Mentor_Name = table.Column<string>(nullable: true),
+                    Description = table.Column<string>(nullable: true),
+                    Rating = table.Column<float>(nullable: false),
                     StudentId = table.Column<int>(nullable: false),
                     MentorId = table.Column<int>(nullable: false)
                 },
@@ -331,39 +332,39 @@ namespace Project_CapStone_Mentorship_Service.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     StudentMentorId = table.Column<int>(nullable: false),
                     LessonActivity = table.Column<int>(nullable: false),
-                    lessonActivityStartTime = table.Column<DateTime>(nullable: true)
+                    LessonActivityId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_StudentMentorLessonActivities", x => x.StudentMentorLessonActivityId);
+                    table.ForeignKey(
+                        name: "FK_StudentMentorLessonActivities_LessonActivities_LessonActivityId",
+                        column: x => x.LessonActivityId,
+                        principalTable: "LessonActivities",
+                        principalColumn: "LessonActivityId",
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_StudentMentorLessonActivities_StudentMentors_StudentMentorId",
                         column: x => x.StudentMentorId,
                         principalTable: "StudentMentors",
                         principalColumn: "StudentMentorId",
                         onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_StudentMentorLessonActivities_LessonActivities_lessonActivityStartTime",
-                        column: x => x.lessonActivityStartTime,
-                        principalTable: "LessonActivities",
-                        principalColumn: "StartTime",
-                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "75a2b900-7eb5-4ead-ad8a-834e37870858", "02f491d4-d67e-4687-aeae-71586b4ed0b5", "Admin", "ADMIN" });
+                values: new object[] { "df4e7561-1540-4c0c-aec9-29dabf483882", "f28d581f-00fe-4616-a1bd-cde5e47709b4", "Admin", "ADMIN" });
 
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "fb798f13-8426-43a0-ab2e-474a36d9032b", "202fa78d-2b78-4bb7-845e-a245f5422d86", "Student", "STUDENT" });
+                values: new object[] { "e4cfb8fd-173a-43d8-9599-07a6065e824f", "350fbc89-6a77-49e4-b01a-49d1647d9b55", "Student", "STUDENT" });
 
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "8452c100-56d7-4ee8-a2ec-9f813f5d3d2b", "959db35f-fffb-46cf-8b7c-0fe28dee91d3", "Mentor", "MENTOR" });
+                values: new object[] { "d018dc4e-fe94-4084-a69b-72792375b441", "a7829bb6-00e7-47d9-a8da-a7232d8804c9", "Mentor", "MENTOR" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -425,14 +426,14 @@ namespace Project_CapStone_Mentorship_Service.Migrations
                 column: "StudentId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_StudentMentorLessonActivities_LessonActivityId",
+                table: "StudentMentorLessonActivities",
+                column: "LessonActivityId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_StudentMentorLessonActivities_StudentMentorId",
                 table: "StudentMentorLessonActivities",
                 column: "StudentMentorId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_StudentMentorLessonActivities_lessonActivityStartTime",
-                table: "StudentMentorLessonActivities",
-                column: "lessonActivityStartTime");
 
             migrationBuilder.CreateIndex(
                 name: "IX_StudentMentors_MentorId",
@@ -482,10 +483,10 @@ namespace Project_CapStone_Mentorship_Service.Migrations
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
-                name: "StudentMentors");
+                name: "LessonActivities");
 
             migrationBuilder.DropTable(
-                name: "LessonActivities");
+                name: "StudentMentors");
 
             migrationBuilder.DropTable(
                 name: "Mentors");
@@ -494,7 +495,7 @@ namespace Project_CapStone_Mentorship_Service.Migrations
                 name: "Students");
 
             migrationBuilder.DropTable(
-                name: "ApplicationForms");
+                name: "Applications");
 
             migrationBuilder.DropTable(
                 name: "Forms");

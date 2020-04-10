@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Project_CapStone_Mentorship_Service.Models;
+using Project_CapStone_Mentorship_Service.Views;
 using SendGrid;
 using SendGrid.Helpers.Mail;
 
@@ -10,13 +11,14 @@ namespace Project_CapStone_Mentorship_Service.Services
 {
     public class EmailServices
     {
+       
 
-        static async Task Execute()
+        public  async Task Execute()
         {
             var mentorEmail = new Mentor();
             var studentEmails = new Student();
             var forms = new LessonActivity();
-            var apiKey = Environment.GetEnvironmentVariable("NAME_OF_THE_ENVIRONMENT_VARIABLE_FOR_YOUR_SENDGRID_KEY");
+            var apiKey = Environment.GetEnvironmentVariable(ApiKeys.SendGridApiKey);
             var client = new SendGridClient(apiKey);
             var from = new EmailAddress(mentorEmail.Email, "Mentor Email");
             var subject = forms.Description;
@@ -27,12 +29,12 @@ namespace Project_CapStone_Mentorship_Service.Services
             var response = await client.SendEmailAsync(msg);
         }
 
-        static async Task Execute2()
+        public  async Task Execute_2()
         {
             var mentorEmail = new Mentor();
             var studentEmails = new Student();
             var forms = new LessonActivity();
-            var apiKey = Environment.GetEnvironmentVariable("NAME_OF_THE_ENVIRONMENT_VARIABLE_FOR_YOUR_SENDGRID_KEY");
+            var apiKey = Environment.GetEnvironmentVariable(ApiKeys.SendGridApiKey);
             var client = new SendGridClient(apiKey);
             var from = new EmailAddress(mentorEmail.Email, "Mentor Email");
             var subject = forms.Description;
